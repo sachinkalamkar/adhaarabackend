@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script>
+         $(document).ready(function(){
+         
+         $("button").click(function(){
+         const urlParams = new URLSearchParams(window.location.search);
+         
+         console.log(JSON.parse('{"' + decodeURI(String(urlParams).replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'))
+         var p=JSON.parse('{"' + decodeURI(String(urlParams).replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}')
+         console.log(p._id)
+         
+         var pwd=$('#confirm').val();
+         
+         const serializeData={
+         "_id":p._id,
+         "temp_id":p.temp_id,
+         "password":pwd
+         }
+         //============= Integration======================
+         var xhr = new XMLHttpRequest();
+         var url = 'http://localhost:4003/setResetPassword';
+         xhr.open("POST", url, true);
+         xhr.setRequestHeader("Content-Type", "application/json");
+         xhr.onreadystatechange = function () {
+         if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+          var out=json.message
+         
+           document.getElementById("res").innerHTML = out;
+          console.log(json.message);
+         }
+         };
+         var data = JSON.stringify(serializeData);
+         xhr.send(data);
+         });
+         
+         });
+      </script>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+         body {
+         font-family: Arial, Helvetica, sans-serif;
+         background-color: black;
+         }
+         * {
+         box-sizing: border-box;
+         }
+         /* Add padding to containers */
+         .container {
+         padding-top: 260px;
+         padding-left: 560px;
+         padding-right: 560px;
+         padding-bottom: 560px;
+         background-color: white;
+         }
+         /* Full-width input fields */
+         input[type=text], input[type=password] {
+         width: 100%;
+         padding: 15px;
+         margin: 5px 0 22px 0;
+         display: inline-block;
+         border: none;
+         background: #f1f1f1;
+         }
+         input[type=text]:focus, input[type=password]:focus {
+         background-color: #ddd;
+         outline: none;
+         }
+         /* Overwrite default styles of hr */
+         hr {
+         border: 1px solid #f1f1f1;
+         margin-bottom: 25px;
+         }
+         /* Set a style for the submit button */
+         .registerbtn {
+         background-color: #e81d62;
+         color: white;
+         padding: 16px 20px;
+         margin: 8px 0;
+         border: none;
+         cursor: pointer;
+         width: 100%;
+         opacity: 0.9;
+         }
+         .registerbtn:hover {
+         opacity: 1;
+         }
+         /* Add a blue text color to links */
+         a {
+         color: dodgerblue;
+         }
+         /* Set a grey background color and center the text of the "sign in" section */
+         .signin {
+         background-color: #f1f1f1;
+         text-align: center;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <h1>Reset your password</h1>
+         <p>Please set you password here.</p>
+         <hr>
+         <div>
+            <b id="res" style="color:green;"></b>
+            <br>
+         </div>
+         <br>
+         <label for="psw"><b>New Password</b></label>
+         <input type="password" placeholder="Enter password" name="psw1" required>
+         <label for="psw"><b>Retype Password</b></label>
+         <input id = "confirm" type="password" placeholder="Enter Password" name="psw2" required>
+         <hr>
+         <button type="submit" class="registerbtn">Set password</button>
+      </div>
+   </body>
+</html>
