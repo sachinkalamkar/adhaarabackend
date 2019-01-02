@@ -1,36 +1,24 @@
-'use strict';
+"use strict";
 
-const  db = require('../models/UserRegisterMdl');
+const db = require("../models/UserRegisterMdl");
 
-exports.updateDetail = (firstName, lastName, mobile, email, pwd, refCode)  => {
-    return new Promise(async (resolve, reject) => {
-
-        const newuser =new db ({
-            firstName : firstName,
-            lastName : lastName,
-            mobile : mobile,
-            email : email,
-            pwd : pwd,
-            refCode : refCode
-            
-       });
-   const salonObj=await db.find({
-
-        $and: [{
-            "firstName": firstName,
-        }, 
-        {
-            "mobile": mobile
-        }
-        ]   
+exports.updateDetail = (name, country, mobile, email, status) => {
+  return new Promise(async (resolve, reject) => {
+    const newuser = new db({
+      name: name,
+      country,
+      mobile: mobile,
+      email: email,
+      status: status
     });
 
+    const userObj = await db.find({
+      _id : id
+    });
 
-    db.findOneAndDelete(salonObj._id, (err, todo) => {
-        
-        const DataSaved = newuser.save();
-        
+    db.findOneAndDelete(uesrObj._id, (err, todo) => {
+      const DataSaved = newuser.save();
     });
     resolve("data has been updated");
-    })
-}
+  });
+};

@@ -1,25 +1,23 @@
 "use strict";
 
-const db = require("../models/UserRegisterMdl");
+const db = require("../models/productRegisterMdl");
 
 
 exports.register = (
-  customer_id,
+  id,
   name,
-  country,
-  mobile,
-  email,
-  status
+  price,
+  category_id,
+  category_name
 
 ) => {
   return new Promise(async (resolve, reject) => {
     const newuser = new db({
-      customer_id: customer_id,
+      id: id,
       name: name,
-      country,
-      mobile: mobile,
-      email: email,
-      status: status
+      price: price,
+      category_id: category_id,
+      category_name: category_name,
 
     });
 

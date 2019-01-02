@@ -1,24 +1,25 @@
-'use strict';
+"use strict";
 
-const  db = require('../models/UserRegisterMdl');
+const db = require("../models/UserRegisterMdl");
 
-exports.removeUser = (UserId) => {
-    return new Promise(async (resolve, reject) => {
-
-   const UserObj=await db.find({
-        "_id":UserId
+exports.removeUser = (id) => {
+  console.log("user id from &&&&&&&&&&&&******", id);
+  return new Promise(async (resolve, reject) => {
+    const userObj = await db.find({
+      "_id" : id
     });
-
-
-   const DeleteObj=await db.findOneAndDelete(UserObj, (err, todo) => {  });
-
-    console.log("user has been removed",DeleteObj);
-
-
-    return resolve({
-        "result":"object deleted"
-    })
-    })
-
-   
+console.log("user id from mongo???????????????", userObj);
+if(userObj[0] != 0){
+const removeUser = await db.findOneAndDelete({_id : id});
+//console.log("user id from mongo 12", userObj._id);
+console.log("show show show", removeUser);    
+return resolve({
+  "result":"User deleted"
+});
 }
+else {
+  console.log("No user exists")
+}
+  
+  });
+};

@@ -5,12 +5,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = mongoose.Schema({ 
-  firstName : String,
-  lastName : String,
+  customer_id : String,
+  name : String,
+  country : String,
   mobile : Number,
   email : String,
-  pwd : String,
-  refCode : String
+  status : String,
+  registred_time : { type : Date, default: Date.now }, 
+  services : [
+    {
+     
+     service_category: String,
+     service_name:String,
+     count: Number,
+     price:Number,
+     service_registred_time : { type : Date, default: Date.now }
+     
+    }
+]
   
 });
 
@@ -22,4 +34,4 @@ mongoose.connect('mongodb://naresh:adaraa2@ds161653.mlab.com:61653/adaraa',{ use
        console.log("err",err);
    })
 
-module.exports = mongoose.model('UserRegister', userSchema);
+module.exports = mongoose.model('userRegister', userSchema);

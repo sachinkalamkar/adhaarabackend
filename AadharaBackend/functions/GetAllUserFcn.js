@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
-const  db = require('../models/UserRegisterMdl');
+const db = require("../models/UserRegisterMdl");
 
 exports.getDetail = () => {
-    return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
+    const userDetails = await db.find();
+    console.log("User details", userDetails);
+    resolve(userDetails);
+  });
+};
 
-        const salonObj=await db.find({});
-        console.log("User details", salonObj);
-        resolve(salonObj);
-        
-    });
-}
+
