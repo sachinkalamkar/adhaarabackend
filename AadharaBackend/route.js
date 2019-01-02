@@ -33,6 +33,35 @@ router.get('/', (req, res) => {
 });
 
 
+
+// Add / Create Job
+
+router.post('/createJob', async(req, res) => {
+    const salonId = req.body.salon_id;
+    const salon_name = req.body.salon_name;
+    const service_id = req.body.service_id;
+    const service_name = req.body.service_name;
+    const service_price = req.body.service_price;
+    const total_service_duration = req.body.total_service_duration;
+    const appointment_date = req.body.appointment_date;
+    const payment = req.body.payment;
+
+    const addJob = await saloonRequestRegistrationSchema.findOneAndUpdate({"_id" : salonId}, {
+            $push: {
+                job_details: [{
+                    salon_id : salonId,
+                    salon_name : salon_name,
+                    service_id : service_id,
+                    service_name : service_name,
+                    service_price : service_price,
+                    appointment_date : appointment_date,
+                    payment : payment
+                }]
+            } 
+    }, { new : true })
+    res.send({addJob})
+})
+
 // List of all registered saloons
 
 router.post('/listOfSalons', async(req, res) => {
@@ -73,29 +102,16 @@ router.post('/salonDetail', async(req, res) => {
         _id : salonId,
     })
 
-    res.send(salonDetails[0]);
+    res.send({"msg" : salonDetails[0]});
 })
 // Edit Stylist
 
- router.post('/editStylist', async(req, res) => {
-
-    const salonId = req.body._id;
-    const stylistId = req.body.salonid;
-    const stylist_first_name = req.body.stylist_first_name;
-    const stylist_last_name = req.body.stylist_last_name;
-    console.log(stylist_first_name);
-    console.log(stylist_last_name);
-
-    const findSalon = await saloonRequestRegistrationSchema.find({
-        "_id" : salonId,
+router.post('/editStylist', async(req, res) => {
+    const stylistId = req.body.stylistId;
+    const ss = await saloonRequestRegistrationSchema.find({
+        "stylist_details._id" : stylistId
     })
-    const no_of_results = findSalon[0].stylist_details.length;
-    for(var i = 0; i < no_of_results; i++){
-            if(findSalon[0].stylist_details[i]._id == stylistId){
-                findSalon[0].stylist_details[i].stylist_first_name = stylist_first_name;
-                findSalon[0].stylist_details[i].stylist_last_name = stylist_last_name;
-            }
-    }
+    res.send({"msg" : ss[0]});
 })
 
 

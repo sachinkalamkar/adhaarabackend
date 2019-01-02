@@ -4,8 +4,17 @@ mongoose.connect('mongodb://sachinkalamkar:sachin4193@ds217970.mlab.com:17970/ad
     .then(() => console.log('Connected to MongoDB..'))
     .catch(err => console.log('Oops something wend wrong', err));
 
-   
-  const saloonSchema = new mongoose.Schema({
+
+  const stylist = new mongoose.Schema({
+      stylist_first_name : String,
+      stylist_last_name : String,
+      stylist_age : Number,
+      stylist_speciality : String,
+      stylist_experience : Number,
+      stylist_dob : Date,
+      stylist_emirates_id : Number
+  });
+  const saloonschema = new mongoose.Schema({
     user_type : { type : String, default : "salon" },
     name_of_salon : String,
     type_of_salon : String,
@@ -46,17 +55,20 @@ mongoose.connect('mongodb://sachinkalamkar:sachin4193@ds217970.mlab.com:17970/ad
           service_duration:String
          }
      ],
-     stylist_details : [
-       {
-          stylist_first_name : String,
-          stylist_last_name : String,
-          stylist_age : Number,
-          stylist_speciality : String,
-          stylist_experience : Number,
-          stylist_dob : Date,
-          stylist_emirates_id : Number
-       }
+     stylist_details : [stylist],
+     job_details : [
+        {
+          user_id : String,
+          salon_id : String,
+          salon_name : String,
+          service_name : [String],
+          service_id : [String],
+          service_price : [Number],
+          total_service_duration : Number,
+          appointment_date : Date,
+          payment : String
+        }
      ]
   });
 
-module.exports = mongoose.model('Salonschema', saloonSchema);
+module.exports = mongoose.model('saloons', saloonschema);
