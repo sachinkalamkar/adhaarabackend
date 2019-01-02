@@ -1,23 +1,21 @@
 'use strict';
-
 const  db = require('../models/saloonRequestRegistrationSchema');
-
 exports.editService = (obj) => {
-return new Promise(async (resolve, reject) => {
 
-    console.log("object==========>>>",obj);
-   
-const response=await db.findOneAndUpdate({"_id":obj.id}, {$set:{ services:obj.services}}, {
-    new: true
-});
+return new Promise(async (req, res) => {
 
-console.log("response",response);
+    console.log("object==========>>>",obj,obj.services);
+   const _id = obj;
 
-
-return resolve({
-    "response":response
+   console.log(_id);
+const response=await db.find({
+    _id: 'obj.services',
 })
 
+console.log(response[0]);
 });
 
+
 }
+
+

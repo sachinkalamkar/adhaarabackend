@@ -9,6 +9,9 @@ const registerUser = require('./functions/RegisterUserFcn');
 const removeUser = require('./functions/RemoveUserFcn');
 const updateUser = require('./functions/UpdateUserFcn');
 const viewUser = require('./functions/GetAllUserFcn');
+const addService=require('./functions/addService');
+const editService=require('./functions/editService');
+const DeleteService=require('./functions/DeleteService');
 
 const saloonRequestRegistration=require('./functions/saloonRequestRegistration')
 const cors = require('cors');
@@ -509,19 +512,19 @@ router.post('/addService', cors(), (req, res) => {
 })
 
 // webservice for edit in salon services
-    router.post('/editService', cors(), (req, res) => { 
-        console.log("UPDATE API CALLED");
-    
-        editService
-            .editService(req.body)
-            .then(result => {
-                console.log("data edited successfully  "+result);
-            });
-        });       
-     
+router.post('/editService', cors(), (req, res) => { 
+    console.log("UPDATE API CALLED");
+
+    editService
+        .editService(req.body)
+        .then(result => {
+            console.log("data edited successfully  "+result);
+        });
+    });       
+ 
 
 // webservice for delete salon services
-    router.post('/DeleteService', cors(), (req, res) => { 
+router.post('/DeleteService', cors(), (req, res) => { 
     console.log("DELETE API CALLED");           
         DeleteService
             .DeleteService(req.body)
@@ -532,7 +535,7 @@ router.post('/addService', cors(), (req, res) => {
                  "result":result.res
                         })
             });
-        });       
+        });     
 
 // ......................Salon Service End.......................
 }

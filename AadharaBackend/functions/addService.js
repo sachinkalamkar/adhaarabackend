@@ -1,22 +1,19 @@
-
 'use strict';
-
 const  db = require('../models/saloonRequestRegistrationSchema');
-
 exports.addService = (obj) => {
-console.log("check object",obj);
-return new Promise(async (resolve, reject) => {
 
-const newuser =new db.findOneAndUpdate({"_id":obj.id},{
-   "ServiceCategory":obj.ServicCategory,
-   "Services":obj.serviceCategory
-})
+return new Promise(async (req, res) => {
 
-const DataSaved=await newuser.save()
-console.log("DataSaved",DataSaved)
+    console.log("object==========>>>",obj);
+   const _id = obj;
 
-return resolve({
-    "result":DataSaved
-})
+const response=await db.findOneAndUpdate({"_id":_id},   {
+                                   $push:{ 
+                             
+                                       "services":obj.services
+                                    }
+                                }, { new: true},)
+
+console.log("response",response);
 });
 }

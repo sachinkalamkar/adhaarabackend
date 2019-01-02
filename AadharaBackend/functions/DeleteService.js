@@ -1,19 +1,18 @@
-
 'use strict';
-
-const db = require('../models/saloonRequestRegistrationSchema');
+const  db = require('../models/saloonRequestRegistrationSchema');
 
 exports.DeleteService = (obj) => {
 return new Promise(async (resolve, reject) => {
-
-var response=await db.find({"_id":obj.id});
+    const _id = obj;
+    const services = _id.services;
+var response=await db.find({"_id":_id});
 
 var items = response[0];
 
 
 items.services = items.services.filter((obj) => {
 
- return obj._id !=obj.serviceid;
+ return obj._id !=services;
 });
 
 console.log(items);
@@ -21,9 +20,6 @@ console.log(items);
 
 const DataSaved=await items.save()
 
-return resolve({
-    "res":DataSaved
-})
 });
 
 }

@@ -50,7 +50,6 @@ mongoose.connect('mongodb://sachinkalamkar:sachin4193@ds217970.mlab.com:17970/ad
          {
           service_category: String,
           service_name:String,
-          image_of_service : String,
           prices:Number,
           service_duration:String
          }
