@@ -11,7 +11,6 @@ const updateUser = require('./functions/UpdateUserFcn');
 const viewUser = require('./functions/GetAllUserFcn');
 
 //-----
-var registerProduct = require("./functions/registerProductFcn");
 var sortUser = require("./functions/SortUserFcn");
 var filterUser = require("./functions/filterUserFcn");
 var usedservice = require("./functions/usedServicesFcn");
@@ -641,22 +640,7 @@ router.post("/registerUser", cors(), (req, res) => {
   });
   //====================== Api for product register =========
 
-  router.post("/registerProduct", cors(), (req, res) => {
-    const id = req.body.id;
-    const name = req.body.name;
-    const price = req.body.price;
-    const category_id = req.body.category_id;
-    const category_name = req.body.category_name;
-
-    console.log("$$$$$$$$$", id, name, price, category_id, category_name);
-    registerProduct.register(id, name, price, category_id, category_name).then(result => {
-      res.send({
-        result: result.customer_id,
-        message: "user has been removed successfully",
-        status: true
-      });
-    });
-  });
+ 
 
    //--------------------------------------
 }
