@@ -51,7 +51,16 @@ router.get('/', (req, res) => {
 });
 
 
+// Get stylist list from saloon
 
+router.post('/getStylistList', async(req, res) => {
+    const salonId = req.body._id;
+
+    const stylistList = await saloonRequestRegistrationSchema.find({
+        "_id" : salonId
+    })
+    .then( (stylistList) => res.send(stylistList[0].stylist_details) )
+})
 // Add / Create Job
 
 router.post('/createJob', async(req, res) => {
@@ -89,7 +98,7 @@ router.post('/listOfSalons', async(req, res) => {
     const salonListLength = registeredSalonList.length;
     var registeredSalon = new Array();
     for(var i = 0; i < salonListLength; i++){
-        if(registeredSalonList[i].request_status == false && registeredSalonList[i].status_of_registration == true){
+        if(registeredSalonList[i].request_status == true){
             registeredSalon.push(registeredSalonList[i]);
         }
     }
@@ -136,18 +145,24 @@ router.post('/editStylist', async(req, res) => {
 // Add stylist
 
 router.post('/addStylist', async(req, res) => {
-
+    console.log(req.body)
     const salonId = req.body._id;
+    console.log(salonId)
     const stylist_first_name = req.body.stylist_first_name;
+    console.log(stylist_first_name)
     const stylist_last_name = req.body.stylist_last_name;
     console.log(stylist_first_name);
     console.log(stylist_last_name);
+    const stylist_speciality = req.body.stylist_speciality;
+    const stylist_url = req.body.stylist_url;
 
     const findStylist = await saloonRequestRegistrationSchema.findOneAndUpdate({"_id" : salonId}, {
         $push : {
             stylist_details : [{
                 stylist_first_name : stylist_first_name,
-                stylist_last_name : stylist_last_name
+                stylist_last_name : stylist_last_name,
+                stylist_speciality : stylist_speciality,
+                'stylist_url' : stylist_url
             }]
         }
     }, { new : true },)

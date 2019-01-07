@@ -12,7 +12,8 @@ mongoose.connect('mongodb://sachinkalamkar:sachin4193@ds217970.mlab.com:17970/ad
       stylist_speciality : String,
       stylist_experience : Number,
       stylist_dob : Date,
-      stylist_emirates_id : Number
+      stylist_emirates_id : Number,
+      stylist_url : String
   });
   const saloonschema = new mongoose.Schema({
     user_type : { type : String, default : "salon" },
